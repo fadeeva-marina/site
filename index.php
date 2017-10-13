@@ -1,4 +1,63 @@
 <!DOCTYPE html>
+<?php
+if(isset($_POST["go"])):
+	$e1=null;
+	$uname=trim($_POST["uname"]);
+	$uname=strip_tags($uname); // вырезаем теги
+        //конвертируем специальные символы в мнемоники HTML
+	$uname=htmlspecialchars($uname,ENT_QUOTES);
+        /* на некоторых серверах
+         * автоматически добавляются
+         * обратные слеши к кавычкам, вырезаем их */
+	$uname=stripslashes($uname);
+	if(strlen($uname)=="0"):
+		$e1.="Заполните поле<br>";
+	endif;
+	
+
+	
+	$e3=null;
+	$umail=trim($_POST["umail"]);
+	$umail=strip_tags($umail);
+	$umail=htmlspecialchars($umail,ENT_QUOTES);
+	$umail=stripslashes($umail);
+	if(!filter_var($umail, FILTER_VALIDATE_EMAIL)):
+		$e3.="Неверное значение<br>";
+	endif;
+
+	$eEn=$e1.$e3;
+	
+	if($eEn==null):
+		$dt=date("d.m.Y, H:i:s"); // дата и время 
+		$mail="marinka24-97@mail.ru"; // e-mail куда уйдет письмо
+		$title="Заявка на подписку"; // заголовок(тема) письма
+		//конвертируем 
+		$title=iconv("utf-8","windows-1251",$title);
+		$title=convert_cyr_string($title, "w", "k");
+		$mess="<html><head></head><body><b>Имя:</b> $uname<br>";
+		// ссылка на e-mail
+		$mess.="<b>E-Mail:</b> <a href='mailto:$umail'>$umail</a><br>"; 
+		$mess.="<b>Дата и Время:</b> $dt</body></html>";
+		//конвертируем 
+		$mess=iconv("utf-8","windows-1251",$mess);
+		$mess=convert_cyr_string($mess, "w", "k");
+		
+		$headers="MIME-Version: 1.0\r\n";
+		$headers.="Content-Type: text/html; charset=koi8-r\r\n";
+		$headers.="From: $umail\r\n"; // откуда письмо
+		mail($mail, $title, $mess, $headers); // отправляем
+
+		// выводим уведомление об успехе операции и перезагружаем страничку
+		print "<script language='Javascript' type='text/javascript'>
+		<!--
+		alert ('Ваше заявка отправлена! Спасибо!');
+		function reload(){location = 'index.php'}; 
+		setTimeout('reload()', 0);
+		-->
+		</script>";
+	endif;
+endif;
+?>
 <html>
 <head>
     <meta charset="utf-8">
@@ -153,27 +212,27 @@
                             <!-- Contact Us section -->
                             <section id="subscribe" class="tm-section">
                                 <header><h2 class="tm-blue-text tm-section-title tm-margin-b-30">Подписаться на рассылку</h2></header>
-
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <form action="#contact" method="post" class="contact-form">
-                                            <div class="form-group">
-                                                <input type="" id="contact_name" name="contact_name" class="form-control" placeholder="Имя"  required/>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="" id="contact_email" name="contact_email" class="form-control" placeholder="Email"  required/>
-                                            </div>                                     
-                                            <button type="submit" class="float-right tm-button">Send</button>
-                                        </form>    
+									<form action="index.php" method="post" class="contact-form">
+									<div class="form-group">
+									<input type="text" name="uname" value="<?=@$uname;?>" class="form-control" placeholder="Имя">
+									<span class="error"><?=@$e1;?></span>
+									</div>
+									<div class="form-group">
+									<input type="text" name="umail" value="<?=@$umail;?>" class="form-control" placeholder="Email">
+									<span class="error"><?=@$e3;?></span>
+									</div>
+									<input type="hidden" name="go" value="5">
+									<button type="submit" href="#subscribe" class="float-right tm-button">Отправить</button>
+									</form>
                                     </div>
-                                    
                                     <div class="col-lg-6 tm-contact-right">
                                         <p>
                                         Укажите свое имя и email и получайте ежедневно по одному из наших рецептов. 
                                         </p>
                                     </div>
                                 </div>
-                                
                             </section>
                             <footer>
                                 <p class="tm-copyright-p">Copyright &copy; <span class="tm-current-year">2017</span> Your Company 
