@@ -58,6 +58,48 @@ if(isset($_POST["go"])):
 	endif;
 endif;
 ?>
+<?php
+// Переменные ошибок
+	$ee1=null;
+	$ee2=null;
+	$ee3=null;
+// Пути зарузки файлов
+	$path = 'i/';
+	$tmp_path = 'tmp/';
+// Массив допустимых значений типа файла
+	$types = array('image/gif', 'image/png', 'image/jpeg');
+// Максимальный размер файла
+	$size = 1024000;
+
+// Обработка запроса
+
+	if ($_SERVER['REQUEST_METHOD'] == 'POST')
+	{
+// Проверяем тип файла
+		if (!in_array($_FILES['picture']['type'], $types))
+			//die('Запрещённый тип файла. <a href="?">Попробовать другой файл?</a>');
+			$ee1.="Запрещённый тип файла. Попробуйте другой файл";
+// Проверяем размер файла
+		if ($_FILES['picture']['size'] > $size)
+			$ee1.="Слишком большой размер файла. Попробуйте другой файл";
+			//die('Слишком большой размер файла. <a href="?">Попробовать другой файл?</a>');
+// Загрузка файла и вывод сообщения
+		if (!@copy($_FILES['picture']['tmp_name'], $path . $_FILES['picture']['name']))
+			$ee3.='Что-то пошло не так';
+		else
+			$ee2.='Загрузка удачна <a href="' . $path . $_FILES['picture']['name'] . '">Посмотреть</a> ' ;
+	}
+	if($ee2!=null)
+	{
+				print "<script language='Javascript' type='text/javascript'>
+		<!--
+		alert ('Рецепт сохранен! Спасибо!');
+		function reload(){location = 'index.php'}; 
+		setTimeout('reload()', 0);
+		-->
+		</script>";
+	}
+?>
 <html>
 <head>
     <meta charset="utf-8">
@@ -104,6 +146,9 @@ endif;
                                 </li>
                                 <li class="tm-nav-item">
                                     <a href="#drinkgallery" class="tm-nav-item-link">Напитки</a>
+                                </li>
+								<li class="tm-nav-item">
+                                    <a href="#addrecept" class="tm-nav-item-link">Предложить свой рецепт</a>
                                 </li>
                                 <li class="tm-nav-item">
                                     <a href="#subscribe" class="tm-nav-item-link">Подписаться на нас</a>
@@ -208,9 +253,39 @@ endif;
                                     </div> 									
                                 </div>
                             </section>
+							
+							<section id="addrecept" class="tm-section">
+							<header><h2 class="tm-blue-text tm-section-title tm-margin-b-30">Предложить свой рецепт</h2></header>
+							<div class="row">
+                                    <div class="col-lg-6">
+									<form enctype="multipart/form-data" method="post">
+										<div class="form-group">
+											<input type="text" name="uname" class="form-control" placeholder="Название">
+											
+										</div>
+										<div class="form-group">
+                                            <textarea id="describe_message" name="describe_message" class="form-control" rows="9" placeholder="Описание"></textarea>
+                                        </div>  
+										<div class="form-group">
+											<input name="picture" type="file" />
+											<span class="error"><?=@$ee1;?></span>
+											<!-- <button type="file" class="float-right tm-button">..</button> -->
+										</div>
 
+										<input type="hidden" value="5" />
+										<button type="submit" class="float-right tm-button">Отправить</button>
+									</form>
+									</div>
+                                    <div class="col-lg-6 tm-contact-right">
+                                        <p>
+                                       Вы можете предложить нам свой рецепт, мы обязательно рассмотрим его и, возможно, добавим к себе :)
+                                        </p>
+                                    </div>
+							</div>
+							</section>
+							
                             <!-- Contact Us section -->
-                            <section id="subscribe" class="tm-section">
+								<section id="subscribe" class="tm-section">
                                 <header><h2 class="tm-blue-text tm-section-title tm-margin-b-30">Подписаться на рассылку</h2></header>
                                 <div class="row">
                                     <div class="col-lg-6">
