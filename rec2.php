@@ -36,13 +36,13 @@ and open the template in the editor.
                     <div class="tm-blue-bg tm-left-column">                        
                         <div class="tm-logo-div text-xs-center">
                            <!--  <img src="img/tm-neaty-logo.png" alt="Logo"> -->
-                            <a href="#welcome"><img src="img/logo.png" alt="Logo"></a>
-                            <h1 class="tm-site-name"><a href="#welcome">Рецепт</a></h1>		
+                            <a href="index.php"><img src="img/logo.png" alt="Logo"></a>
+                            <h1 class="tm-site-name"><a href="index.php">Рецепт</a></h1>		
                         </div>
                         <nav class="tm-main-nav">
                             <ul class="tm-main-nav-ul">
                                 <li class="tm-nav-item">
-                                    <a href="index.php#welcome" class="tm-nav-item-link">Главная</a>
+                                    <a href="index.php" class="tm-nav-item-link">Главная</a>
                                 </li>
                                 <li class="tm-nav-item">
                                     <a href="index.php#bakerygallery" class="tm-nav-item-link">Выпечка</a>
@@ -76,7 +76,7 @@ and open the template in the editor.
                                 <div class="row"> 
                                     <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 push-lg-4 push-md-5">
                                         <input type="hidden" name="recept1" value="5">
-                                        <p>Ингредиенты</p>
+                                        <p class ="ingr">Ингредиенты:</p>
                                         <?php
                                         // Соединиться с сервером БД
                                         $link = mysqli_connect("localhost", "root", "", "recepts") or die(mysqli_error());
@@ -102,7 +102,7 @@ and open the template in the editor.
                                         <p>Продолжаю штудировать старые кулинарные книги. На этот раз мне помогла мамина кулинарная библиотека, т.е. книга «Рыбные блюда» 1959 г. издания. К сожалению, она почти без картинок и уж совсем без фотографий, поэтому форму и дизайн пирога пришлось сочинять на ходу. Название написано именно так, без кавычек, из чего полагаю, что рецепт аутентичный.</p>
                                     </div>
                                     <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 pull-lg-8 pull-md-7 tm-about-img-container">
-                                        <img src="img/03.jpg" alt="Image" class="img-fluid">    
+                                        <img src="img/04.jpg" alt="Image" class="img-fluid">    
                                     </div> 
                                 </div>
                             </section>

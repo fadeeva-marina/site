@@ -3,65 +3,65 @@
 $redirectURL = 'index.php';
 if (isset($_POST["go"])):
 
-$e1 = null;
-$uname = trim($_POST["uname"]);
-$uname = strip_tags($uname); // вырезаем теги
+    $e1 = null;
+    $uname = trim($_POST["uname"]);
+    $uname = strip_tags($uname); // вырезаем теги
 //конвертируем специальные символы в мнемоники HTML
-$uname = htmlspecialchars($uname, ENT_QUOTES);
-/* на некоторых серверах
- * автоматически добавляются
- * обратные слеши к кавычкам, вырезаем их */
-$uname = stripslashes($uname);
-if (strlen($uname) == "0"):
-$e1 .= "Заполните поле<br>";
-endif;
+    $uname = htmlspecialchars($uname, ENT_QUOTES);
+    /* на некоторых серверах
+     * автоматически добавляются
+     * обратные слеши к кавычкам, вырезаем их */
+    $uname = stripslashes($uname);
+    if (strlen($uname) == "0"):
+        $e1 .= "Заполните поле<br>";
+    endif;
 
 
 
-$e3 = null;
-$umail = trim($_POST["umail"]);
-$umail = strip_tags($umail);
-$umail = htmlspecialchars($umail, ENT_QUOTES);
-$umail = stripslashes($umail);
-if (!filter_var($umail, FILTER_VALIDATE_EMAIL)):
-$e3 .= "Неверное значение<br>";
-endif;
+    $e3 = null;
+    $umail = trim($_POST["umail"]);
+    $umail = strip_tags($umail);
+    $umail = htmlspecialchars($umail, ENT_QUOTES);
+    $umail = stripslashes($umail);
+    if (!filter_var($umail, FILTER_VALIDATE_EMAIL)):
+        $e3 .= "Неверное значение<br>";
+    endif;
 
-$eEn = $e1 . $e3;
+    $eEn = $e1 . $e3;
 
-if ($eEn == null):
-$dt = date("d.m.Y, H:i:s"); // дата и время 
-$mail = "marinka24-97@mail.ru"; // e-mail куда уйдет письмо
-$title = "Заявка на подписку"; // заголовок(тема) письма
+    if ($eEn == null):
+        $dt = date("d.m.Y, H:i:s"); // дата и время 
+        $mail = "marinka24-97@mail.ru"; // e-mail куда уйдет письмо
+        $title = "Заявка на подписку"; // заголовок(тема) письма
 //конвертируем 
-$title = iconv("utf-8", "windows-1251", $title);
-$title = convert_cyr_string($title, "w", "k");
-$mess = "<html><head></head><body><b>Имя:</b> $uname<br>";
+        $title = iconv("utf-8", "windows-1251", $title);
+        $title = convert_cyr_string($title, "w", "k");
+        $mess = "<html><head></head><body><b>Имя:</b> $uname<br>";
 // ссылка на e-mail
-$mess .= "<b>E-Mail:</b> <a href='mailto:$umail'>$umail</a><br>";
-$mess .= "<b>Дата и Время:</b> $dt</body></html>";
+        $mess .= "<b>E-Mail:</b> <a href='mailto:$umail'>$umail</a><br>";
+        $mess .= "<b>Дата и Время:</b> $dt</body></html>";
 //конвертируем 
-$mess = iconv("utf-8", "windows-1251", $mess);
-$mess = convert_cyr_string($mess, "w", "k");
+        $mess = iconv("utf-8", "windows-1251", $mess);
+        $mess = convert_cyr_string($mess, "w", "k");
 
-$headers = "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/html; charset=koi8-r\r\n";
-$headers .= "From: $umail\r\n"; // откуда письмо
-mail($mail, $title, $mess, $headers); // отправляем
+        $headers = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=koi8-r\r\n";
+        $headers .= "From: $umail\r\n"; // откуда письмо
+        mail($mail, $title, $mess, $headers); // отправляем
 
-$f = fopen('textfile.txt', a);
-fputs($f, "Имя " . $uname . " " . $umail . "\n");
-fclose($f);
+        $f = fopen('textfile.txt', a);
+        fputs($f, "Имя " . $uname . " " . $umail . "\n");
+        fclose($f);
 
 // выводим уведомление об успехе операции и перезагружаем страничку
-print "<script language='Javascript' type='text/javascript'>
+        print "<script language='Javascript' type='text/javascript'>
 		<!--
 		alert ('Ваше заявка отправлена! Спасибо!');
 		function reload(){location = 'index.php'}; 
 		setTimeout('reload()', 0);
 		-->
 		</script>";
-endif;
+    endif;
 endif;
 ?>
 <?php
@@ -116,7 +116,7 @@ if (isset($_POST["go1"])):
         $query = "INSERT INTO `" . $db_table . "` (`id`, `Name`,`Descrtiption`) VALUES (NULL,'$nameR','$text');";
         //echo $query;
         $result = mysqli_query($db, $query);
-mysqli_close($db);
+        mysqli_close($db);
 //    if ($result == 'true'){
 //        echo "Информация занесена в базу данных";
 //    }else{
@@ -152,13 +152,30 @@ endif;
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-          
-          <![endif]-->
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+                  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+          <![endif]-->
+
         <style>
             .redtext {
                 color: red; /* Цвет текста */
+            }
+            td select,
+            td input {
+                width: 150px;
+            }
+
+            label {
+                display: block;
+            }
+
+            .error input,
+            .error textarea {
+                border: 1px solid red;
+            }
+
+            .error {
+                color: red;
             }
         </style>
     </head>
@@ -216,7 +233,7 @@ endif;
                                         <p>Мы обычные люди, которые любят готовить простые, но вкусные и красивые блюда. И нам очень хочется делиться этим с вами! Надеемся, вам понравится!</p>
                                     </div>
                                     <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 pull-lg-8 pull-md-7 tm-about-img-container">
-                                        <img src="img/neaty-02.jpg" alt="Image" class="img-fluid">    
+                                        <img src="img/neaty-02.jpg" alt="Image" class="img-fluid img-fluid1">    
                                     </div> 
                                 </div>
                             </section>
@@ -236,15 +253,15 @@ endif;
                                         <a href="rec2.php"><span>Рецепт 2</span></a>
                                     </div>
                                     <div class="tm-img-container tm-img-container-1 textimage">
-                                        <a href="img/05.jpg"><img src="img/05.jpg" alt="Image" class="img-fluid tm-img-tn"></a>
+                                        <img src="img/05.jpg" alt="Image" class="img-fluid tm-img-tn">
                                         <span>Рецепт 3</span>										
                                     </div>
                                     <div class="tm-img-container tm-img-container-1 textimage">
-                                        <a href="img/06.jpg"><img src="img/06.jpg" alt="Image" class="img-fluid tm-img-tn"></a>    
+                                        <img src="img/06.jpg" alt="Image" class="img-fluid tm-img-tn">
                                         <span>Рецепт 4</span>
                                     </div>
                                     <div class="tm-img-container tm-img-container-1 textimage">
-                                        <a href="img/07.jpg"><img src="img/07.jpg" alt="Image" class="img-fluid tm-img-tn"></a>    
+                                        <img src="img/07.jpg" alt="Image" class="img-fluid tm-img-tn">   
                                         <span>Рецепт 5</span>
                                     </div>   
                                 </div>
@@ -255,15 +272,15 @@ endif;
                                 <header><h2 class="tm-blue-text tm-section-title tm-margin-b-30">Десерты</h2></header>
                                 <div class="tm-gallery-container tm-gallery-1">
                                     <div class="tm-img-container tm-img-container-1 textimage">
-                                        <a href="img/08.jpg"><img src="img/08.jpg" alt="Image" class="img-fluid tm-img-tn"></a>    
+                                        <img src="img/08.jpg" alt="Image" class="img-fluid tm-img-tn">
                                         <span>Рецепт 1</span>
                                     </div>
                                     <div class="tm-img-container tm-img-container-1 textimage">
-                                        <a href="img/09.jpg"><img src="img/09.jpg" alt="Image" class="img-fluid tm-img-tn"></a>    
+                                        <img src="img/09.jpg" alt="Image" class="img-fluid tm-img-tn">    
                                         <span>Рецепт 2</span>
                                     </div>
                                     <div class="tm-img-container tm-img-container-1 textimage">
-                                        <a href="img/10.jpg"><img src="img/10.jpg" alt="Image" class="img-fluid tm-img-tn"></a>   
+                                        <img src="img/10.jpg" alt="Image" class="img-fluid tm-img-tn">
                                         <span>Рецепт 3</span>										
                                     </div>                                    
                                 </div>
@@ -272,7 +289,7 @@ endif;
                             <!-- Third Gallery section -->     
                             <section id="drinkgallery" class="tm-section">
                                 <header><h2 class="tm-blue-text tm-section-title tm-margin-b-30">Напитки</h2></header>
-                                <div class="tm-gallery-container tm-gallery-1">
+                                <div class="tm-gallery-container tm-gallery-3">
                                     <div class="tm-img-container tm-img-container-1  textimage">
                                         <a href="img/11.jpg"><img src="img/11.jpg" alt="Image" class="img-fluid tm-img-tn"></a>   
                                         <span>Рецепт 1</span>
@@ -307,8 +324,8 @@ endif;
                                             <div class="form-group">
                                                 <textarea id="describe_message" name="describe_message" class="form-control" rows="9" placeholder="Описание"></textarea>
                                             </div>  
-                                            <div class="form-group">
-                                                <input name="picture" type="file" />
+                                            <div class="form-group break-word">
+                                                <input name="picture" type="file" class = "break-word"/>
                                                 <span class="redtext"><?= @$ee1; ?></span>
                                                 <!-- <button type="file" class="float-right tm-button">..</button> -->
                                             </div>
@@ -350,12 +367,13 @@ endif;
                                     </div>
                                 </div>
                             </section>
+
                             <footer>
                                 <p class="tm-copyright-p">Copyright &copy; <span class="tm-current-year">2017</span> Your Company 
                                     | Designed by M</p>
                             </footer>
                         </div>  
-
+                        <a href="#" class="scrollup">Наверх</a>
                     </div> <!-- Right column: content -->
                 </div>
             </div> <!-- row -->
@@ -365,9 +383,42 @@ endif;
         <script src="js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
         <script src="js/jquery.magnific-popup.min.js"></script>     <!-- Magnific pop-up (http://dimsemenov.com/plugins/magnific-popup/) -->
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
+<!--        <script src="js/bootstrap.min.js"></script>-->
+
+<!--        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 100) {
+                        $('.scrollup').fadeIn();
+                    } else {
+                        $('.scrollup').fadeOut();
+                    }
+                });
+
+                $('.scrollup').click(function () {
+                    $("html, body").animate({scrollTop: 0}, 600);
+                    return false;
+                });
+
+            });
+        </script>-->
         <script>
 
             $(document).ready(function () {
+
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 200) {
+                        $('.scrollup').fadeIn();
+                    } else {
+                        $('.scrollup').fadeOut();
+                    }
+                });
+
+                $('.scrollup').click(function () {
+                    $("html, body").animate({scrollTop: 0}, 600);
+                    return false;
+                });
 
                 // Single page nav
                 $('.tm-main-nav').singlePageNav({
@@ -375,10 +426,33 @@ endif;
                     offset: 20
                 });
 
+                $('.tm-site-name').singlePageNav({
+                    'currentClass': "active",
+                    offset: 20
+                });
 
+                $('.tm-gallery-3').magnificPopup({
+                    delegate: 'a', // child items selector, by clicking on it popup will open
+                    type: 'image',
+                    gallery: {enabled: true}
+                    // other options
+                });
 
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 100) {
+                        $('.scrollup').fadeIn();
+                    } else {
+                        $('.scrollup').fadeOut();
+                    }
+                });
+
+                $('.scrollup').click(function () {
+                    $("html, body").animate({scrollTop: 0}, 600);
+                    return false;
+                });
                 $('.tm-current-year').text(new Date().getFullYear());
             });
-        </script>               
+        </script>  
+
     </body>
 </html>
