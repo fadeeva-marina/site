@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="recepts@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="recepts">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mysql"/>
+    <schema id="5" parent="1" name="performance_schema"/>
+    <schema id="6" parent="1" name="phpmyadmin"/>
+    <schema id="7" parent="1" name="test"/>
+    <table id="8" parent="2" name="ingredient"/>
+    <table id="9" parent="2" name="recepts"/>
+    <column id="10" parent="8" name="id">
+      <Position>1</Position>
+      <DataType>int(5)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="11" parent="8" name="idR">
+      <Position>2</Position>
+      <DataType>int(5)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="12" parent="8" name="Name">
+      <Position>3</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="13" parent="8" name="Count">
+      <Position>4</Position>
+      <DataType>double(20,2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="14" parent="8" name="UnitOfM">
+      <Position>5</Position>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="15" parent="8" name="idR">
+      <ColNames>idR</ColNames>
+    </index>
+    <key id="16" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="17" parent="8" name="ingredient_ibfk_1">
+      <ColNames>idR</ColNames>
+      <RefSchemaName>recepts</RefSchemaName>
+      <RefTableName>recepts</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="18" parent="9" name="id">
+      <Position>1</Position>
+      <DataType>int(5)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="19" parent="9" name="Name">
+      <Position>2</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="20" parent="9" name="Descrtiption">
+      <Position>3</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="21" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
